@@ -19,16 +19,17 @@ def fetch_data_from_mysql():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM employees")
     rows = cursor.fetchall()
+    columns = [i[0] for i in cursor.description]  # Obtener los nombres de las columnas
     cursor.close()
     connection.close()
-    return rows
+    return rows, columns
 
 # Función para guardar los datos en un archivo CSV
-def save_to_csv(data):
+def save_to_csv(data, columns):
     with open('registros.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([i[0] for i in cursor.description])  # Escribir los nombres de las columnas
-        writer.writerows(data)
+        writer.writerow(columns)  # Escribir los nombres de las columnas
+        writer.writerows(data)    # Escribir los datos
 
 # Función para subir el archivo CSV a S3
 def upload_to_s3(bucket_name, file_name):
