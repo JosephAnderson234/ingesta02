@@ -6,8 +6,7 @@ import os
 # Conectar a la base de datos MySQL
 def get_mysql_connection():
     connection = mysql.connector.connect(
-        host='localhost',
-        port=8005,
+        host='mysql_c',
         user='root', # Usuario de MySQL
         password='utec', # Contraseña de MySQL
         database='bd_api_employees' # Nombre de la base de datos
